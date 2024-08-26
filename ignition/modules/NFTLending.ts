@@ -7,7 +7,7 @@ const NFTLending = buildModule("NFTLending", (m) => {
   const loanDuration = m.getParameter("loanDuration", ONE_MONTH_IN_SECS);
   const interestRate = m.getParameter("interestRate", INTEREST_RATE);
 
-  const nftLending = m.contract("NFTLending", [loanDuration, interestRate]);
+  const nftLending = m.contract("NFTLending", [interestRate, loanDuration]);
 
   return { nftLending };
 });
