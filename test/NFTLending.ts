@@ -15,9 +15,11 @@ describe("NFTLending", function () {
     const NFTLending = await hre.ethers.getContractFactory("NFTLending");
     const nftLending = await NFTLending.deploy(INTEREST_RATE, ONE_MONTH_IN_SECS);
 
+    const baseUri: string = "ipfs://QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/";
+
     // deploy the mock nft contract
     const MockNFT = await hre.ethers.getContractFactory("MockNFT");
-    const mockNFT = await MockNFT.deploy("MOCK", "MCK");
+    const mockNFT = await MockNFT.deploy("MOCK", "MCK", baseUri);
 
     return { nftLending, mockNFT, ONE_MONTH_IN_SECS, INTEREST_RATE, owner, alice, bob, cedric };
   }
@@ -66,7 +68,7 @@ describe("NFTLending", function () {
         const { nftLending, mockNFT, owner, bob } = await loadFixture(deployNFTLendingFixture);
         const fundAmount: number = 100000000;
         const nftId: number = 1; // for owner
-        const loanAmount: number = 1000;
+        const loanAmount: number = 10;
 
         // mint tokens
         await mockNFT.connect(owner).mint(owner.address, nftId);
@@ -142,7 +144,7 @@ describe("NFTLending", function () {
         await mockNFT.connect(alice).approve(nftLending.target, 1);
         await nftLending.connect(owner).depositFunds({ value: fundAmount });
 
-        const loanAmount: number = 1000;
+        const loanAmount: number = 10;
         const nftId: number = 1;
         await expect(nftLending.connect(alice).pause(true)).to.be.revertedWithCustomError(
           nftLending,
@@ -201,7 +203,7 @@ describe("NFTLending", function () {
         await mockNFT.connect(owner).approve(nftLending.target, 2);
         await mockNFT.connect(owner).approve(nftLending.target, 3);
 
-        const loanAmount: number = 1000;
+        const loanAmount: number = 10;
         await nftLending.connect(owner).depositFunds({ value: 100000000 });
         await nftLending.connect(owner).createLoan(mockNFT.target, 1, loanAmount);
         await nftLending.connect(owner).createLoan(mockNFT.target, 2, loanAmount);
