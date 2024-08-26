@@ -191,7 +191,7 @@ contract NFTLending is ReentrancyGuard, Pausable, Ownable {
      * @notice This function is used to get the price of the NFT, can be improved by connecting it to an oracle
      */
     function getNFTPrice() public pure returns (uint256) {
-        return 5 ether;
+        return 100;
     }
 
     /**
