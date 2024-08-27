@@ -36,7 +36,7 @@ contract NFTLending is ReentrancyGuard, Pausable, Ownable {
     }
 
     mapping(uint256 => Loan) public loans; // Mapping from loan ID to Loan
-    mapping(uint256 => bool) public collateralizedNFTs; // Mapping from NFT ID to boolean to check if the NFT is already collateralized
+    mapping(address => mapping(uint256 => bool)) public collateralizedNFTs; // Mapping from NFT ID to boolean to check if the NFT is already collateralized
     mapping(address => uint256) loanCountPerWallet; // Mapping from wallet address to the number of loans created by the wallet
 
     // Events
@@ -102,7 +102,7 @@ contract NFTLending is ReentrancyGuard, Pausable, Ownable {
         // ERC721 transferFrom method already checks for zero address and ownership so no need to add guards here
         IERC721(_nftAddress).transferFrom(msg.sender, address(this), _nftId);
         loans[totalLoans] = newLoan;
-        collateralizedNFTs[_nftId] = true;
+        collateralizedNFTs[_nftAddress][_nftId] = true;
         totalLoans++;
         // Transfer loan amount to the borrower
         transferETH(payable(msg.sender), _loanAmount);
@@ -126,7 +126,7 @@ contract NFTLending is ReentrancyGuard, Pausable, Ownable {
         IERC721(loan.nftAddress).transferFrom(address(this), msg.sender, loan.nftId);
         // Mark the loan as inactive
         loan.isActive = false;
-        collateralizedNFTs[loan.nftId] = false;
+        collateralizedNFTs[loan.nftAddress][loan.nftId] = false;
 
         emit LoanRepaid(msg.sender, _loanId, loan.nftId);
     }
@@ -143,7 +143,7 @@ contract NFTLending is ReentrancyGuard, Pausable, Ownable {
         IERC721(loan.nftAddress).safeTransferFrom(address(this), owner(), loan.nftId);
         // Mark the loan as inactive
         loan.isActive = false;
-        collateralizedNFTs[loan.nftId] = false;
+        collateralizedNFTs[loan.nftAddress][loan.nftId] = false;
         emit NFTClaimed(owner(), _loanId, loan.nftId);
     }
 
