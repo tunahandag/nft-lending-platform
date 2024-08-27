@@ -76,6 +76,14 @@ npx hardhat run scripts/deploy.ts --network <network-name>
 
    Lend an NFT by calling the `lendNft` function and providing the NFT address, ID, and loan amount.
 
+4. **Repay your loan:**
+
+   Repay your loan by calling the `repayLoan` function and providing the loan ID, and loan amount with interest rate added on top.
+
+5. **Claim an NFT:**
+
+   Claim an NFT that has not been repaid in the given loan duration by calling the `claimNFT` function and providing the loan ID.
+
 ### Scripts
 
 - **Commiting Code**:

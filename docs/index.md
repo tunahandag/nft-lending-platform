@@ -61,7 +61,7 @@ mapping(uint256 => struct NFTLending.Loan) loans
 ### collateralizedNFTs
 
 ```solidity
-mapping(uint256 => bool) collateralizedNFTs
+mapping(address => mapping(uint256 => bool)) collateralizedNFTs
 ```
 
 ### loanCountPerWallet
@@ -323,15 +323,55 @@ _Function to pause the contract_
 
 ## MockNFT
 
+### baseURI
+
+```solidity
+string baseURI
+```
+
 ### constructor
 
 ```solidity
-constructor(string _name, string _symbol) public
+constructor(string _name, string _symbol, string _baseUri) public
 ```
 
 ### mint
 
 ```solidity
-function mint(address _to, uint256 _tokenId) external
+function mint(address _to, uint256 tokenId) external
 ```
+
+### _baseURI
+
+```solidity
+function _baseURI() internal view virtual returns (string)
+```
+
+Return baseURI
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | string | baseTokenURI baseTokenURI of the contract at the moment |
+
+### tokenURI
+
+```solidity
+function tokenURI(uint256 tokenId) public view returns (string)
+```
+
+_tokenURI returns the uri to metadata_
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| tokenId | uint256 | tokenId |
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | string | tokenURI for given tokenId if exists |
 
