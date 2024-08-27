@@ -9,10 +9,10 @@
     "dotenv": "^16.4.5",
     "git-cz": "^4.9.0",
     "hardhat": "^2.22.9",
-    "solidity-docgen": "^0.6.0-beta.36"
+    "solidity-docgen": "^0.6.0-beta.36",
+    "web3": "^4.12.1"
   },
   "scripts": {
     "commit": "git-cz"
-  },
-  "dependencies": {}
+  }
 }
