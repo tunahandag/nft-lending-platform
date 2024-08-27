@@ -51,7 +51,7 @@ Ensure you have the following installed on your system:
 To run the test suite for the smart contracts:
 
 ```bash
-npx hardhat test
+npx hardhat test --network hardhat
 ```
 
 ### Smart Contract Deployment
@@ -59,10 +59,17 @@ npx hardhat test
 You can deploy the contracts using Hardhat's deployment scripts:
 
 ```bash
-npx hardhat run scripts/deploy.ts --network <network-name>
+npx hardhat ignition deploy ignition/modules/NFTLendingPlatform.ts --network linea
+
 ```
 
 ### Interacting with the Platform
+
+You can interact with the deployed contracts using the provided scripts in the `scripts/` directory:
+
+```bash
+npx hardhat run scripts/interact.ts
+```
 
 1. **Mint NFTs:**
 
